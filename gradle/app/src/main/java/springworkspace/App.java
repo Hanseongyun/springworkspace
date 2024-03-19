@@ -3,6 +3,26 @@
  */
 package springworkspace;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+// @NoArgsConstructor      // final이 있으경우 빨간줄
+@AllArgsConstructor
+@RequiredArgsConstructor    // final로 된것들만 생성자를 만들어줌
+@Builder
+class Person {
+
+    private final String name;
+    private int age;
+
+}
+
 public class App {
     public String getGreeting() {
         return "Hello World!";
@@ -10,5 +30,9 @@ public class App {
 
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
+
+        Person person = new Person("홍길동", 20);       // VSC에서는 매개변수 이름 자동완성 됨
+        person = new Person("고길동");         
+        person = Person.builder().name("홍길동").age(20).build();   // 어떠한 필드에 어떤값을 넣는지 명확하게 표현
     }
 }
