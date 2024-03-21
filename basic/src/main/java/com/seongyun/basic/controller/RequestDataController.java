@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.seongyun.basic.dto.SampleDto;
 
+import jakarta.validation.Valid;
+
 @RestController
 // Http * localhost:4000/request-data/**
 @RequestMapping("/request-data")
@@ -43,7 +45,7 @@ public class RequestDataController {
     })
     // http://localhost:4000/request-data/path-variable/10
     public String deletePathVariable(
-        @PathVariable("age") Integer age,    /* int로 할경우 미입력시(필수가 아닐시) 자동으로 0이뜸 정확하게 파악이 안됨 */
+        @PathVariable("age") Integer age,    /* int로 할경우 미입력시(required = false) 자동으로 0이뜸 정확하게 파악이 안됨 */
         @PathVariable(name="name", required=false) String name
     ){
         return "사용자 나이:" + age + "/사용자 이름:" + name;
@@ -80,7 +82,8 @@ public class RequestDataController {
     @PostMapping("/post")
     public String post(
         // @RequestBody String text
-        @RequestBody SampleDto dto
+        // @Valid : 해당 payload에 대해서 유효성 검사를 실시 하도록 함
+        @RequestBody @Valid SampleDto dto
     ) {
         return "전송한 데이터: " + dto.toString() ;
     }
