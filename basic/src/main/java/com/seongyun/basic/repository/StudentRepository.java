@@ -17,7 +17,7 @@ import com.seongyun.basic.entity.StudentEntity;
 
 public interface StudentRepository 
 // JpaRepository<T, ID> : 
-// - JPA 기반의 REpository를 구현하는 주요 인터페이스
+// - JPA 기반의 Repository를 구현하는 주요 인터페이스
 // - 기본 CRUD, 정렬 기능을 제공하고 있음
 // - JPA 기반 Repository를 생성할때 반드시 상속해야 함
 // - 매개타입 T : 해당 Repository가 어떤 Entity의 Repository인지 나타내는 매개타입
