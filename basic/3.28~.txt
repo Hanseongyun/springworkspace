@@ -15,3 +15,27 @@ WHERE student_number = dto.studentNumber;
 1. student 클래스로 접근
 2. dto.studentNumber에 해당하는 인스턴스를 검색
 3. 검색된 인스턴스의 address 값을 dto.address로 변경
+
+
+// 3.29 //		Spring Data JPA (document) 검색
+
+CRUD
+CREATE : 1~2 
+READ: 엄청 많음
+UPDATE: 1~컬럼 개수 
+DELETE: 1~2
+
+findby+필드명
+
+findbyStudentNumberAndAge
+
+SELECT * FROM student
+WHERE student_number = ?
+AND age = ?
+
+
+SELET * FROM student
+WHERE 
+(student_number = ? OR address = ?) AND (graduation = ?)   // 쿼리메서드 이정도 수준도 인식할수없음
+
+
