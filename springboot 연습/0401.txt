@@ -42,8 +42,28 @@ implement로 작성 @Repository extends
 
 API 명세서
 모듈4개
-1. 각가의 모듈에 대해 컨트롤러(리퀘스트매핑포함) 서비스 만드는작업
+1. 각각의 모듈에 대해 컨트롤러(리퀘스트매핑포함) 서비스 만드는작업
 2. 인터페이스 생성 (request : 입력 , response : 출력)
 
 @restcontroller
-@requestmapping
+@requestmapping(경로)
+
+Response
+code, message 형태 
+// (객체의 정의 : 클래스) 객체 중복제거 > 상속
+
+dto 하위에 response, request 폴더생성
+ResponseDto.java
+>@Getter, @Allargs~
+
+BoardListItem.java 작성 > GetLatestListResponseDto 작성
+
+매서드가 가지고있는 패턴 = 앤드포인트 = latest-list ?
+
+//
+GetUserResponseDto > UserService ?? UserController?? > UserServiceImplementation
+
+
+
+
+
