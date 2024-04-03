@@ -64,6 +64,35 @@ BoardListItem.java 작성 > GetLatestListResponseDto 작성
 GetUserResponseDto > UserService ?? UserController?? > UserServiceImplementation
 
 
+-0403
+UserServiceImplementation.java
+
+사용자로부터 email 입력
+---------------------------
+성공 - 유저정보 반환
+존재하지 않는 유저
+데이터베이스 에러
+
+primary key 조회 > 결과 0~1개
+
+
+회원가입 절차
+requestDto 작성 (SignUpRequestDto) , ResponseDto 작성됨(가지고잇음)
+
+-> AuthService -signUp (dto)
+-> AuthController - signUp (requestBody)
+-> 구현 AuthServiceImplementation.java - 비지니스 로직 작성
+유효성검사 실패 ( 컨트롤러 위치에서 검증 - 이후에 처리)
+중복된 이메일
+중복된 닉네임
+중복된 휴대전화번호
+성공(의 의미?)
+데이터베이스 오류
+
+데이터가 필요 > findBy
+있다없다형태 >exist 형태로 조회
+
+
 
 
 

@@ -5,7 +5,10 @@ import org.springframework.stereotype.Repository;
 
 import com.example.board.entity.UserEntity;
 
+
+
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, String>{
     
+    UserEntity findByEmail(String email);
 }

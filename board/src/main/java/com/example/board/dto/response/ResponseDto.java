@@ -23,15 +23,8 @@ public class ResponseDto {
     }
 
 
-    // -----------
-    public static ResponseEntity<ResponseDto> notExistBoard() {
-        ResponseDto body = new ResponseDto(ResponseCode.NOT_EXIST_BOARD, ResponseMessage.NOT_EXIST_BOARD);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+    public static ResponseEntity<ResponseDto> duplicateEmail() {
+        ResponseDto body = new ResponseDto(ResponseCode.DUPLICATE_EMAIL, ResponseMessage.DUPLICATE_EMAIL);
+        return 
     }
-
-    public static ResponseEntity<ResponseDto> validationFail() {
-        ResponseDto body = new ResponseDto(ResponseCode.VALIDATION_FAIL, ResponseMessage.VALIDATION_FAIL);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
-    }
-    // -----------
 }
