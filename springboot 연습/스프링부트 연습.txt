@@ -93,6 +93,25 @@ requestDto 작성 (SignUpRequestDto) , ResponseDto 작성됨(가지고잇음)
 있다없다형태 >exist 형태로 조회
 
 
+-0404
+ResponseDto.java 작성
+- 성공, 중복이메일, 중복닉네임, 중복폰넘버
+
+AuthServiceImplementation 작성
+
+ValidationExceptionHandler 작성
+Validation failed 처리
+
+
+*닉네임 수정
+- UserController
+- RequestDto
+- UserService
+- UserService
+- UserServiceImplementation
+ 
+
+
 
 
 
