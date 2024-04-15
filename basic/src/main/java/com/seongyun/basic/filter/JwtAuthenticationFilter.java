@@ -1,7 +1,19 @@
 package com.seongyun.basic.filter;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
+import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -13,6 +25,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
+@Component
 @RequiredArgsConstructor
 // OncePerRequestFilter :
 // - 해당 클래스를 필터 클래스로 지정하는 추상클래스
@@ -32,17 +45,48 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             // 1. request 객체에서 token 가져오기
             String token = parseBearerToken(request);
             if (token == null) {
+                filterChain.doFilter(request, response);
                 return;
             }
             // 2. token 검증
             String subject = jwtProvider.validation(token);
             if (subject == null) {
+                filterChain.doFilter(request, response);
                 return;
             }
+
+            // 접근 주체에 대한 권한 지정
+            List<GrantedAuthority> roles = AuthorityUtils.NO_AUTHORITIES;
+            if (subject.equals("student")) {
+                roles = new ArrayList<>();
+                roles.add(new SimpleGrantedAuthority("ROLE_STUDENT"));
+            } 
+
+            // 3. principle에 대한 정보를 controller로 전달하기 위해 context에 담기
+
+            // 3-1. 인증된 사용자라는 의미의 UsernamePasswordAuthenticationToken 객체를 생성
+            // 사용자의 이름, 비밀번호, 사용자 권한)
+            AbstractAuthenticationToken authenticationToken 
+                = new UsernamePasswordAuthenticationToken(subject, null, roles);
+
+            // 3-2. 인증 요청에 대한 세부정보를 등록 / 웹 인증 정보 해당 리퀘스트에 등록
+            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+            // 3-3. 빈 security context 생성
+            SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+
+            // 3-4. 생성한 빈 security context에 생성한 인증 토큰을 설정
+            securityContext.setAuthentication(authenticationToken);
+
+            // 3-5. 생성한 security context를 사용할 수 있도록 등록
+            SecurityContextHolder.setContext(securityContext);
 
         } catch (Exception exception) {
             exception.printStackTrace();
         }
+
+        // 4. 다음 필터에 request 객체와 response 객체를 전달
+        filterChain.doFilter(request, response);
     }
     
     // 1. request 객체에서 header를 가져옴
